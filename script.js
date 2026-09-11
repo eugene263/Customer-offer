@@ -38,6 +38,35 @@
   }
   requestAnimationFrame(tickIcons);
 
+  /* ---------- Cadence stat count-up ---------- */
+  var cadenceNums = document.querySelectorAll('.cadence-num');
+  function animateCadenceNum(el) {
+    var target = parseInt(el.dataset.target, 10);
+    var duration = 1000;
+    var start = performance.now();
+    function step(now) {
+      var raw = Math.min(1, (now - start) / duration);
+      var eased = 1 - Math.pow(1 - raw, 3);
+      var val = Math.round(target * eased);
+      el.textContent = val.toLocaleString('en-US');
+      if (raw < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if ('IntersectionObserver' in window) {
+    var cadenceObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCadenceNum(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    cadenceNums.forEach(function (el) { cadenceObserver.observe(el); });
+  } else {
+    cadenceNums.forEach(animateCadenceNum);
+  }
+
   /* ---------- How it works accordion ---------- */
   var includedRaw = [
     { title: 'A network under one dashboard', desc: 'A network of social media accounts connected to a single control panel: posts, stats and the status of every account are visible in real time, with no manual reconciling of data across separate dashboards.' },
