@@ -105,26 +105,6 @@
       '</div>';
 
     var video = el.querySelector('video');
-    var videoWrap = el.querySelector('.how-video-wrap');
-    // These clips open on a dark intro moment before the real motion content
-    // starts. Their keyframes sit 5s apart, so seeking to a mid-GOP time
-    // just snaps back to frame 0 (the intro) instead of skipping it — that's
-    // why an earlier currentTime-based fix didn't work. Instead: let it play
-    // from 0 while fully hidden, and only reveal once real playback has
-    // actually advanced past the intro.
-    var REVEAL_AFTER = 1.2;
-    var lastTime = 0;
-
-    video.addEventListener('timeupdate', function () {
-      var t = video.currentTime;
-      if (t < lastTime - 0.5) {
-        // looped back to the start — hide until it clears the intro again
-        videoWrap.classList.remove('is-visible');
-      } else if (t >= REVEAL_AFTER && el.classList.contains('is-open')) {
-        videoWrap.classList.add('is-visible');
-      }
-      lastTime = t;
-    });
 
     function open() {
       el.classList.add('is-open');
@@ -134,7 +114,6 @@
     function close() {
       el.classList.remove('is-open');
       el.style.height = '112px';
-      videoWrap.classList.remove('is-visible');
       video.pause();
     }
 
