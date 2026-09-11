@@ -111,7 +111,7 @@
       if (openHowItem && openHowItem !== api) openHowItem.close();
       openHowItem = api;
       el.classList.add('is-open');
-      el.style.height = '240px';
+      el.style.height = '252px';
       video.play().catch(function () {});
     }
     function close() {
