@@ -70,13 +70,24 @@
           '<p class="how-desc">' + item.desc + '</p>' +
         '</div>' +
         '<div class="how-video-wrap">' +
-          '<video src="assets/how-step-' + (i + 1) + '.mp4" autoplay loop muted playsinline ' +
+          '<video src="assets/how-step-' + (i + 1) + '.mp4" loop muted playsinline preload="auto" ' +
             'style="filter:' + videoFilter + '; transform:scale(' + videoScale + ');"></video>' +
         '</div>' +
       '</div>';
 
-    function open() { el.classList.add('is-open'); el.style.height = '240px'; }
-    function close() { el.classList.remove('is-open'); el.style.height = '112px'; }
+    var video = el.querySelector('video');
+
+    function open() {
+      el.classList.add('is-open');
+      el.style.height = '240px';
+      video.currentTime = 0;
+      video.play().catch(function () {});
+    }
+    function close() {
+      el.classList.remove('is-open');
+      el.style.height = '112px';
+      video.pause();
+    }
 
     el.addEventListener('mouseenter', open);
     el.addEventListener('mouseleave', close);
