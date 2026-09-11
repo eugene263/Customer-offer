@@ -108,7 +108,7 @@
 
   var cases = [
     {
-      label: 'CASE 1', name: 'OBMIFY',
+      label: 'CASE 1', name: 'OBMIFY', website: 'https://obmify.com/en',
       meta: 'exchange-office monitoring · fintech niche · 2 networks · 4 months of work',
       headline: '120M+ views in four months',
       desc: 'A steady pace — 30M views a month, 1M a day. The top video reached 2.6M views. Format: talking-head, local news hooks, short hooks.',
@@ -120,7 +120,7 @@
       ],
     },
     {
-      label: 'CASE 2', name: 'EDUCERA',
+      label: 'CASE 2', name: 'EDUCERA', website: 'https://educera.ai/',
       meta: 'online AI courses · 1 network · 2 months of work',
       headline: '42M+ views in two months',
       desc: 'One network — 21M views a month, about 700,000 a day. The top video reached 1.2M views. Format: short lessons, AI tool breakdowns, student cases.',
@@ -132,7 +132,7 @@
       ],
     },
     {
-      label: 'CASE 3', name: 'LUNOMEN',
+      label: 'CASE 3', name: 'LUNOMEN', website: 'https://lunomen.com/',
       meta: 'astrology service: horoscopes, natal charts · 1 network · 6 months of work',
       headline: '90M+ views in six months',
       desc: 'A long-running partnership — 15M views a month, 0.5M a day, with no drop in pace. Format: short daily forecasts, natal chart breakdowns, sign compatibility.',
@@ -249,7 +249,10 @@
     }).join('');
 
     caseDetail.innerHTML =
-      '<div class="case-top-row"><span class="case-label">' + c.label + '</span><span class="case-name">' + c.name + '</span></div>' +
+      '<div class="case-top-row">' +
+        '<div class="case-top-left"><span class="case-label">' + c.label + '</span><span class="case-name">' + c.name + '</span></div>' +
+        '<a class="case-visit-btn" href="' + c.website + '" target="_blank" rel="noopener noreferrer">Visit site →</a>' +
+      '</div>' +
       '<div class="case-meta-row">' + metaParts + '</div>' +
       '<h3 class="case-headline">' + c.headline + '</h3>' +
       '<p class="case-desc">' + c.desc + '</p>' +

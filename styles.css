@@ -303,9 +303,22 @@ a:hover { color: var(--accent-hover); }
 .dot.is-active { background: var(--accent); width: 24px; }
 
 .case-detail { min-width: 0; animation: gpeCaseIn 0.5s cubic-bezier(.22, .9, .32, 1); }
-.case-top-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.case-top-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.case-top-left { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .case-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: #1A1600; background: var(--accent); padding: 4px 10px; border-radius: 999px; }
 .case-name { font-size: 20px; font-weight: 700; }
+.case-visit-btn {
+  flex-shrink: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 8px 16px;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+.case-visit-btn:hover { color: #1A1600; background: var(--accent); border-color: var(--accent); }
 .case-meta-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
 .case-meta-pill { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; }
 .case-headline { font-size: 34px; font-weight: 700; margin: 0 0 16px; letter-spacing: -0.01em; text-wrap: pretty; }
