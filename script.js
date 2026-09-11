@@ -76,16 +76,26 @@
       '</div>';
 
     var video = el.querySelector('video');
+    var videoWrap = el.querySelector('.how-video-wrap');
+    var videoReady = false;
+
+    video.addEventListener('loadeddata', function () {
+      videoReady = true;
+      if (el.classList.contains('is-open')) videoWrap.classList.add('is-visible');
+    });
 
     function open() {
       el.classList.add('is-open');
       el.style.height = '240px';
-      video.currentTime = 0;
       video.play().catch(function () {});
+      // Don't reveal the video until it actually has a decoded frame ready —
+      // otherwise the browser briefly paints an empty/placeholder frame first.
+      if (videoReady) videoWrap.classList.add('is-visible');
     }
     function close() {
       el.classList.remove('is-open');
       el.style.height = '112px';
+      videoWrap.classList.remove('is-visible');
       video.pause();
     }
 

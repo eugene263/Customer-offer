@@ -254,8 +254,8 @@ a:hover { color: var(--accent-hover); }
   display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.35s ease;
 }
 .how-video-wrap video { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; }
-.how-item.is-open .how-desc,
-.how-item.is-open .how-video-wrap { opacity: 1; }
+.how-item.is-open .how-desc { opacity: 1; }
+.how-video-wrap.is-visible { opacity: 1; }
 
 /* CHANNELS */
 .channels-section { border-bottom: 1px solid var(--border); }
