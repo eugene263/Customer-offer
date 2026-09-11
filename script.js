@@ -78,7 +78,20 @@
     var video = el.querySelector('video');
     var videoWrap = el.querySelector('.how-video-wrap');
     var videoReady = false;
+    // These clips open on a dark/black intro moment before the real motion
+    // content starts — skip straight past it so it never shows at all.
+    var SKIP_INTRO = 0.8;
 
+    video.addEventListener('loadedmetadata', function () {
+      if (video.duration > SKIP_INTRO + 0.5) {
+        video.currentTime = SKIP_INTRO;
+      }
+    });
+    video.addEventListener('timeupdate', function () {
+      if (video.currentTime < SKIP_INTRO - 0.05) {
+        video.currentTime = SKIP_INTRO;
+      }
+    });
     video.addEventListener('loadeddata', function () {
       videoReady = true;
       if (el.classList.contains('is-open')) videoWrap.classList.add('is-visible');
