@@ -106,33 +106,30 @@
 
     var video = el.querySelector('video');
     var videoWrap = el.querySelector('.how-video-wrap');
-    var videoReady = false;
-    // These clips open on a dark/black intro moment before the real motion
-    // content starts — skip straight past it so it never shows at all.
-    var SKIP_INTRO = 0.8;
+    // These clips open on a dark intro moment before the real motion content
+    // starts. Their keyframes sit 5s apart, so seeking to a mid-GOP time
+    // just snaps back to frame 0 (the intro) instead of skipping it — that's
+    // why an earlier currentTime-based fix didn't work. Instead: let it play
+    // from 0 while fully hidden, and only reveal once real playback has
+    // actually advanced past the intro.
+    var REVEAL_AFTER = 1.2;
+    var lastTime = 0;
 
-    video.addEventListener('loadedmetadata', function () {
-      if (video.duration > SKIP_INTRO + 0.5) {
-        video.currentTime = SKIP_INTRO;
-      }
-    });
     video.addEventListener('timeupdate', function () {
-      if (video.currentTime < SKIP_INTRO - 0.05) {
-        video.currentTime = SKIP_INTRO;
+      var t = video.currentTime;
+      if (t < lastTime - 0.5) {
+        // looped back to the start — hide until it clears the intro again
+        videoWrap.classList.remove('is-visible');
+      } else if (t >= REVEAL_AFTER && el.classList.contains('is-open')) {
+        videoWrap.classList.add('is-visible');
       }
-    });
-    video.addEventListener('loadeddata', function () {
-      videoReady = true;
-      if (el.classList.contains('is-open')) videoWrap.classList.add('is-visible');
+      lastTime = t;
     });
 
     function open() {
       el.classList.add('is-open');
       el.style.height = '240px';
       video.play().catch(function () {});
-      // Don't reveal the video until it actually has a decoded frame ready —
-      // otherwise the browser briefly paints an empty/placeholder frame first.
-      if (videoReady) videoWrap.classList.add('is-visible');
     }
     function close() {
       el.classList.remove('is-open');
@@ -342,4 +339,47 @@
   renderPhones();
   renderDots();
   startMetricAnim();
+
+  /* ---------- Scroll-in reveal for section blocks ---------- */
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    var revealGroups = [
+      '.cadence-section .eyebrow, .cadence-section .cadence-h2',
+      '.cadence-card',
+      '.cadence-footnote',
+      '.how-head',
+      '.how-item',
+      '.channels-section .eyebrow, .channels-section .cadence-h2',
+      '.channels-desc',
+      '.channels-grid > div',
+      '.cases-section .kicker, .cases-h2',
+      '.phones-stage, .cases-nav',
+      '.case-detail',
+      '.closing-intro',
+      '.closing-card',
+    ];
+    var revealEls = [];
+    revealGroups.forEach(function (sel) {
+      var group = document.querySelectorAll(sel);
+      group.forEach(function (el, i) {
+        el.classList.add('reveal');
+        el.style.transitionDelay = (Math.min(i, 4) * 0.09) + 's';
+        revealEls.push(el);
+      });
+    });
+
+    if ('IntersectionObserver' in window) {
+      var revealObserver = new IntersectionObserver(function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(function (el) { revealObserver.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('reveal-in'); });
+    }
+  }
 })();
