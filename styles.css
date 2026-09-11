@@ -12,12 +12,17 @@
 
 * { box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  background: #000000;
+  overscroll-behavior-y: none;
+}
 
 body {
   margin: 0;
   background: #000000;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 a { color: var(--accent); text-decoration: none; }
@@ -138,6 +143,7 @@ a:hover { color: var(--accent-hover); }
   justify-content: center;
   text-align: center;
   overflow: hidden;
+  background: #000000;
 }
 .hero-video-wrap {
   position: absolute;
@@ -400,6 +406,8 @@ a:hover { color: var(--accent-hover); }
   .how-item-inner { flex-wrap: wrap; }
   .phones-stage { display: none; }
   .cases-nav { margin-top: 0; }
+  .cases-visual { order: 2; margin-top: 24px; }
+  .case-detail { order: 1; }
 }
 
 @media (max-width: 640px) {

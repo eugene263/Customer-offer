@@ -81,6 +81,7 @@
   var tints = ['#2A2110', '#1E1E1E', '#2A1D10', '#1F1826'];
 
   var howStack = document.getElementById('howStack');
+  var openHowItem = null;
   includedRaw.forEach(function (item, i) {
     var el = document.createElement('div');
     el.className = 'how-item';
@@ -107,15 +108,19 @@
     var video = el.querySelector('video');
 
     function open() {
+      if (openHowItem && openHowItem !== api) openHowItem.close();
+      openHowItem = api;
       el.classList.add('is-open');
       el.style.height = '240px';
       video.play().catch(function () {});
     }
     function close() {
+      if (openHowItem === api) openHowItem = null;
       el.classList.remove('is-open');
       el.style.height = '112px';
       video.pause();
     }
+    var api = { open: open, close: close };
 
     // On touch devices, mouseenter fires as part of the synthetic tap event
     // sequence too — combined with the click toggle below, that made the
