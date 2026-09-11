@@ -138,8 +138,15 @@
       video.pause();
     }
 
-    el.addEventListener('mouseenter', open);
-    el.addEventListener('mouseleave', close);
+    // On touch devices, mouseenter fires as part of the synthetic tap event
+    // sequence too — combined with the click toggle below, that made the
+    // first tap open and immediately re-close it, needing a second tap.
+    // Only bind hover behavior where real hover exists.
+    var supportsHover = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (supportsHover) {
+      el.addEventListener('mouseenter', open);
+      el.addEventListener('mouseleave', close);
+    }
     el.addEventListener('click', function () {
       if (el.classList.contains('is-open')) close(); else open();
     });
