@@ -91,6 +91,13 @@ a:hover { color: var(--accent-hover); }
   gap: 12px;
 }
 .logo { height: 34px; width: auto; object-fit: contain; display: block; pointer-events: none; }
+.header-tagline {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text-3);
+  white-space: nowrap;
+}
 
 /* HERO */
 .gpe-hero {
@@ -359,4 +366,5 @@ a:hover { color: var(--accent-hover); }
   .gpe-section { padding: 48px 18px !important; }
   .gpe-hero-h1 { font-size: 26px !important; }
   .gpe-header { padding: 0 16px !important; }
+  .header-tagline { display: none; }
 }
